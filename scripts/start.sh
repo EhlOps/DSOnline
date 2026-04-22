@@ -74,7 +74,7 @@ done
 for i in $(seq 1 "$NUM_PLAYERS"); do
     novnc_port=$((6080 + i))
     vnc_port=$((5900 + i))
-    websockify --web=/usr/share/novnc/ --blacklist-timeout=0 "$novnc_port" "localhost:$vnc_port" &
+    websockify --web=/usr/share/novnc/ "$novnc_port" "localhost:$vnc_port" &
     echo "[start] Player $i VNC :$vnc_port → noVNC :$novnc_port"
 done
 

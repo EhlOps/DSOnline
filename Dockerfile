@@ -46,6 +46,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+# Disable websockify's IP blacklist. Docker NAT makes every inbound connection
+# appear as [::1] inside the container, so one failed handshake blocks all traffic.
+RUN bash -c 'sed -i "s/TIMEOUT = [0-9]*/TIMEOUT = 0/g" \
+    $(python3 -c "import inspect, websockify.websockifyserver as m; print(inspect.getfile(m))")'
+
 RUN mkdir -p /tmp/.X11-unix && chmod 1777 /tmp/.X11-unix
 
 RUN useradd -m -s /bin/bash -u 1000 vncuser

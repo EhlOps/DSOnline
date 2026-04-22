@@ -119,7 +119,7 @@ def generate_nginx_conf(domain: str, players: int) -> None:
     location /player{i}/ {{
         auth_basic "Player {i}";
         auth_basic_user_file /etc/nginx/player{i}.htpasswd;
-        proxy_pass http://localhost:{novnc_port}/;
+        proxy_pass http://127.0.0.1:{novnc_port}/;
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "upgrade";
@@ -309,14 +309,16 @@ def cmd_start(_args: argparse.Namespace) -> None:
 
 
 def cmd_nginx(_args: argparse.Namespace) -> None:
-    if not NGINX_GENERATED.exists():
-        print(f"Generated nginx config not found at {NGINX_GENERATED}")
-        print("Run 'python3 setup.py configure' first.")
+    env = load_env()
+    if not env:
+        print("No .env found. Run 'python3 setup.py configure' first.")
         sys.exit(1)
 
-    env = load_env()
     domain = env.get("DOMAIN", "localhost")
     players = int(env.get("NUM_PLAYERS", 2))
+
+    # Always regenerate from .env so the config stays in sync with setup.py.
+    generate_nginx_conf(domain, players)
 
     print("\n=== Applying nginx configuration ===\n")
 

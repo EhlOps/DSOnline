@@ -3,7 +3,7 @@ services:
     build: .
     container_name: melonds-multiplayer
     restart: unless-stopped
-    shm_size: 512mb
+    shm_size: 2g
     devices:
       - /dev/fuse:/dev/fuse
     cap_add:
