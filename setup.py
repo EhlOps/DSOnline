@@ -300,9 +300,9 @@ def cmd_start(_args: argparse.Namespace) -> None:
 
     print(f"\n=== DSOnline is running ({players} player{'s' if players != 1 else ''}) ===\n")
     for i in range(1, players + 1):
-        print(f"  Player {i}: http://{domain}/player{i}/vnc.html")
+        print(f"  Player {i}: http://{domain}/player{i}/vnc.html?path=player{i}/")
     print()
-    print("Direct noVNC (no nginx):")
+    print("Direct noVNC (bypassing nginx):")
     for i in range(1, players + 1):
         print(f"  Player {i}: http://{domain}:{6080 + i}/vnc.html")
     print()
@@ -360,7 +360,7 @@ def cmd_nginx(_args: argparse.Namespace) -> None:
 
     print(f"\n=== nginx configured ({players} player{'s' if players != 1 else ''}) ===\n")
     for i in range(1, players + 1):
-        print(f"  Player {i}: http://{domain}/player{i}/vnc.html")
+        print(f"  Player {i}: http://{domain}/player{i}/vnc.html?path=player{i}/")
     print()
 
 

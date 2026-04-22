@@ -74,9 +74,11 @@ python3 setup.py nginx   # install and reload the nginx config
 
 | Player | URL |
 |--------|-----|
-| Player 1 | `http://<your-domain>/player1/vnc.html` |
-| Player 2 | `http://<your-domain>/player2/vnc.html` |
+| Player 1 | `http://<your-domain>/player1/vnc.html?path=player1/` |
+| Player 2 | `http://<your-domain>/player2/vnc.html?path=player2/` |
 | ... | ... |
+
+The `?path=playerN/` parameter tells noVNC to open its WebSocket connection back through the same nginx path, so the auth and proxy routing work correctly. Without it, noVNC defaults to `/websockify` which nginx doesn't route.
 
 Each player is prompted for their VNC password on connect.
 
@@ -288,8 +290,8 @@ sudo certbot renew --dry-run
 
 | Player | URL |
 |--------|-----|
-| Player 1 | `https://yourdomain.com/player1/vnc.html` |
-| Player 2 | `https://yourdomain.com/player2/vnc.html` |
+| Player 1 | `https://yourdomain.com/player1/vnc.html?path=player1/` |
+| Player 2 | `https://yourdomain.com/player2/vnc.html?path=player2/` |
 
 ### Troubleshooting Certbot
 
