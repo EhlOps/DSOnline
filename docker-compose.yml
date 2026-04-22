@@ -1,0 +1,30 @@
+services:
+  melonds:
+    build: .
+    container_name: melonds-multiplayer
+    restart: unless-stopped
+    shm_size: 512mb
+    devices:
+      - /dev/fuse:/dev/fuse
+    cap_add:
+      - SYS_ADMIN
+    environment:
+      NUM_PLAYERS: ${NUM_PLAYERS:-2}
+      PLAYER1_VNC_PASSWORD: ${PLAYER1_VNC_PASSWORD:-player1}
+      PLAYER2_VNC_PASSWORD: ${PLAYER2_VNC_PASSWORD:-player2}
+      VNC_GEOMETRY: ${VNC_GEOMETRY:-1280x720}
+
+    ports:
+      - "127.0.0.1:6081:6081"
+      - "127.0.0.1:6082:6082"
+
+    volumes:
+      - player1-data:/home/vncuser/.config/melonDS/player1
+      - player2-data:/home/vncuser/.config/melonDS/player2
+      - ./roms:/home/vncuser/roms:ro
+
+volumes:
+  player1-data:
+    driver: local
+  player2-data:
+    driver: local

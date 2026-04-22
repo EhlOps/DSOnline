@@ -1,0 +1,12 @@
+# Environment — never commit real passwords
+.env
+
+# ROM files — likely too large and potentially copyright-sensitive
+roms/
+
+# Nginx configuration — may contain sensitive information
+nginx/
+
+# OS junk
+.DS_Store
+Thumbs.db
